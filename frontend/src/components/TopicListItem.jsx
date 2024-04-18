@@ -12,9 +12,9 @@ import React from "react";
 
 const TopicListItem = () => {
   return (
-    <div className="topic-list__item">
+    <ul className="topic-list__item">
       {sampleDataForTopicListItem.label}
-    </div>
+    </ul>
   );
 };
 

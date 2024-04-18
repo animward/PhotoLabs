@@ -1,13 +1,11 @@
 import React from 'react';
-import PhotoList from './components/PhotoList'; // Import PhotoList component
-import PhotoFavButton from './components/PhotoFavButton'; // Import PhotoFavButton component
-import './App.scss'; // Import App.scss for styling
-import TopNavigation from './components/TopNavigationBar'; // Import TopNavigation component
+import PhotoList from './components/PhotoList';
+import './App.scss';
+import TopNavigation from './components/TopNavigationBar';
 
 const App = () => {
   return (
     <div className="App">
-
       <TopNavigation />
       <PhotoList/>
     </div>
