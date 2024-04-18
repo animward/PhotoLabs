@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+.photo-list__item {
+  border-radius: 50px;
+  margin: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  display: block;
+  text-align: center;
+}
+
+img {
+  border-radius: 50px;
+  width: 80%;
+  height: 80%;
+  padding: 10px;
+}
