@@ -3,7 +3,7 @@
 import "../styles/PhotoListItem.scss";
 
 
-const sampleDataForPhotoListItem = {
+export const sampleDataForPhotoListItem = {
   id: "1",
   location: {
     city: "Montreal",
@@ -16,17 +16,19 @@ const sampleDataForPhotoListItem = {
 
 import React from "react";
 
-const PhotoListItem = () => {
+const PhotoListItem = ({ photoData }) => {
+  const { imageSource, location, username, profile } = photoData;
+
   return (
-    <div className="photo-list__item">
-      <img src={sampleDataForPhotoListItem.imageSource} alt="User uploaded" />
+<div className="photo-list__item">
+      <img src={imageSource} alt="User uploaded" />
       <div className="photo-list__item__details">
         <div className="photo-list__item__details__location">
-          {sampleDataForPhotoListItem.location.city}, {sampleDataForPhotoListItem.location.country}
+          {location.city}, {location.country}
         </div>
         <div className="photo-list__item__details__user">
-          <img src={sampleDataForPhotoListItem.profile} alt="User profile" />
-          {sampleDataForPhotoListItem.username}
+          <img src={profile} alt="User profile" />
+          {username}
         </div>
       </div>
     </div>
