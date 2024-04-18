@@ -1,37 +1,37 @@
-
-
-import "../styles/PhotoListItem.scss";
-import PhotoFavButton from "./PhotoFavButton";
+import '../styles/PhotoListItem.scss';
+import PhotoFavButton from './PhotoFavButton';
 
 export const sampleDataForPhotoListItem = {
-  id: "1",
+  id: '1',
   location: {
-    city: "Montreal",
-    country: "Canada",
+    city: 'Montreal',
+    country: 'Canada',
   },
   imageSource: `${process.env.PUBLIC_URL}/Image-1-Regular.jpeg`,
-  username: "Joe Example",
+  username: 'Joe Example',
   profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
 };
 
-import React from "react";
+import React from 'react';
 
 const PhotoListItem = ({ photoData }) => {
-  const { imageSource, location, username, profile } = photoData;
+  const { urls, location, user } = photoData;
 
   return (
-<div className="photo-list__item">
-      <img src={imageSource} alt="User uploaded" />
-      <div className="photo-list__item__details">
-        <div className="photo-list__item__details__location">
-          {location.city}, {location.country}
+    <div className="photo-list__item">
+      <img className="photo-list__image" src={urls.full} alt="User uploaded" />
+      <div className="photo-list__user-details">
+        <img
+          className="photo-list__user-profile"
+          src={user.profile}
+          alt="User profile"
+        />
+        <div className="photo-list__user-info">
+          <div>{user.username}</div>
+          <div className="photo-list__user-location">{`${location.city}, ${location.country}`}</div>
         </div>
-        <div className="photo-list__item__details__user">
-          <img src={profile} alt="User profile" />
-          {username}
-        </div>
-        <PhotoFavButton />
       </div>
+      <PhotoFavButton />
     </div>
   );
 };

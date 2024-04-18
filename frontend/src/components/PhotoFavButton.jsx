@@ -11,7 +11,7 @@ const PhotoFavButton = () => {
   }
 
   return (
-    <div className={`photo-list__fav-icon ${isFav ? 'liked' : ''}`} onClick={handleFavClick}>
+    <div className={`photo-list__fav-icon${isFav ? '-liked' : ''}`} onClick={handleFavClick}>
     <FavIcon isActive={isFav} />
   </div>
   );
