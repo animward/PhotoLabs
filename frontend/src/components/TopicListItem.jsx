@@ -8,8 +8,6 @@ const sampleDataForTopicListItem = {
   label: "Nature",
 };
 
-import React from "react";
-
 const TopicListItem = () => {
   return (
     <ul className="topic-list__item">
