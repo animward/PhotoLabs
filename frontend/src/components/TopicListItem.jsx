@@ -8,10 +8,12 @@ const sampleDataForTopicListItem = {
   label: "Nature",
 };
 
+import React from "react";
+
 const TopicListItem = () => {
   return (
     <div className="topic-list__item">
-      {/* Insert React */}
+      {sampleDataForTopicListItem.label}
     </div>
   );
 };

@@ -4,7 +4,7 @@ import '../styles/TopNavigationBar.scss'
 
 const TopNavigation = () => {
   return (
-    <div className="top-nav-bar">
+    <div className="App-header">
       <span className="top-nav-bar__logo">PhotoLabs</span>
     </div>
   )
