@@ -10,9 +10,9 @@ const sampleDataForTopicListItem = {
 
 const TopicListItem = ({ title }) => {
   return (
-    <ul className="topic-list__item">
+    <div className="topic-list__item">
       {title}
-    </ul>
+    </div>
   );
 };
 
