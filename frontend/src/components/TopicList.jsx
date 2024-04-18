@@ -21,7 +21,7 @@ const sampleDataForTopicList = [
   },
 ];
 
-const TopicList = () => {
+const TopicList = ({ topics }) => {
   return (
     <div className="top-nav-bar__topic-list">
       {sampleDataForTopicList.map((topic) => (

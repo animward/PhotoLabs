@@ -3,15 +3,15 @@ import TopNavigationBar from './TopNavigationBar';
 import PhotoList from './PhotoList';
 import '../styles/HomeRoute.scss';
 import TopicList from './TopicList';
-import photos from 'mocks/photos';
-import topics from 'mocks/topics';
+import topics from '../mocks/topics';
+import photos from '../mocks/photos';
 
-const HomeRoute = () => {
+const HomeRoute = ({ photos }) => {
   return (
     <div className="home-route">
       <TopNavigationBar />
-      <PhotoList photoData={ photos } />
-      <TopicList TopicList={ topics } />
+      <PhotoList photos={ photos } />
+      <TopicList topics={ topics } />
     </div>
   );
 };
