@@ -7,7 +7,7 @@ const PhotoFavButton = () => {
   const [isFav, setIsFav] = useState(false);
 
   const handleFavClick = () => {
-    setIsFav(!isFav);
+    setIsFav(prevIsFav => !prevIsFav);
   }
 
   return (
