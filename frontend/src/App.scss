@@ -52,3 +52,21 @@ img {
   height: 80%;
   padding: 10px;
 }
+
+.photo-list__fav-icon {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: #f0f0f0;
+  border: 1px solid #f0f0f0;
+  display: inline-block;
+  text-align: center;
+  line-height: 30px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.photo-list__fav-icon.liked {
+  background-color: #ff0000; 
+  border-color: #ff0000;
+}

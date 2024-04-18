@@ -1,7 +1,7 @@
 
 
 import "../styles/PhotoListItem.scss";
-
+import PhotoFavButton from "./PhotoFavButton";
 
 export const sampleDataForPhotoListItem = {
   id: "1",
@@ -30,6 +30,7 @@ const PhotoListItem = ({ photoData }) => {
           <img src={profile} alt="User profile" />
           {username}
         </div>
+        <PhotoFavButton />
       </div>
     </div>
   );
