@@ -35,7 +35,11 @@ const HomeRoute = ({ photos }) => {
         toggleModal={toggleModal}
       />
       <TopicList topics={topics} />
-      <PhotoDetailsModal isOpen={isModalOpen} onClose={toggleModal} />
+      <PhotoDetailsModal 
+      isOpen={isModalOpen}
+       onClose={toggleModal}
+       selectedPhoto={photos['']}
+       similarPhotos={[]}/>
     </div>
   );
 };
