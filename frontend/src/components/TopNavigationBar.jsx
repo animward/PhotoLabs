@@ -11,6 +11,7 @@ const TopNavigation = ({ topics }) => {
      <TopicList topics={ topics }/>
       <FavBadge isFavPhotoExist={true} />
     </div>
+    
   )
 }
 
