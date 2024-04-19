@@ -1,6 +1,9 @@
 import React from 'react';
 import '../styles/PhotoDetailsModal.scss';
 import PhotoList from './PhotoList';
+import FavBadge from './FavBadge';
+import PhotoFavButton from './PhotoFavButton';
+import FavIcon from './FavIcon';
 
 const PhotoDetailsModal = ({ isOpen, onClose, selectedPhoto, similarPhotos }) => {
   const handleClose = () => {
@@ -17,6 +20,8 @@ const PhotoDetailsModal = ({ isOpen, onClose, selectedPhoto, similarPhotos }) =>
         {selectedPhoto && (
           <img src={selectedPhoto.urls.regular} alt={selectedPhoto.alt_description} />
         )}
+				<PhotoFavButton
+				/>
       </div>
       <div className="similar-photos">
         <h2>Similar Photos</h2>

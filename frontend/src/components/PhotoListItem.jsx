@@ -15,8 +15,8 @@ export const sampleDataForPhotoListItem = {
 
 import React from 'react';
 
-const PhotoListItem = ({ photoData, toggleModal }) => {
-  const { imageSource, location, user, urls } = photoData;
+const PhotoListItem = ({ photoData, toggleModal, toggleFavorite }) => {
+  const { imageSource, location, user, urls, id: photoId } = photoData;
 
 
   const handleClick = () => { 
@@ -37,7 +37,7 @@ const PhotoListItem = ({ photoData, toggleModal }) => {
           <div className="photo-list__user-location">{`${location.city}, ${location.country}`}</div>
         </div>
       </div>
-      <PhotoFavButton />
+      <PhotoFavButton toggleFavorite={toggleFavorite} photoId={photoId}/>
     </div>
   );
 };

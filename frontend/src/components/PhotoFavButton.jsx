@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 
 import FavIcon from './FavIcon';
 import '../styles/PhotoFavButton.scss';
+import HomeRoute from './HomeRoute';
 
-const PhotoFavButton = () => {
+const PhotoFavButton = ({ toggleFavorite }) => {
   const [isFav, setIsFav] = useState(false);
 
   const handleFavClick = () => {

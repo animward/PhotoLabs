@@ -39,7 +39,8 @@ const HomeRoute = ({ photos }) => {
       isOpen={isModalOpen}
        onClose={toggleModal}
        selectedPhoto={photos['']}
-       similarPhotos={[]}/>
+       similarPhotos={[]}
+       toggleFavorite={toggleFavorite} />
     </div>
   );
 };
