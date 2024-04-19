@@ -2,6 +2,7 @@ import React from "react";
 import PhotoListItem from "./PhotoListItem";
 import photos from "../mocks/photos";
 import "../styles/PhotoList.scss";
+import HomeRoute from "./HomeRoute";
 
 const sampleDataForPhotoList = [
   {
@@ -57,11 +58,16 @@ const sampleDataForPhotoList = [
   },
 ];
 
-const PhotoList = ({ photos }) => {
+const PhotoList = ({ photos, toggleFavorite, favoritePhotos, toggleModal }) => {
   return (
     <ul className="photo-list">
     {photos.map((photo) => (
-      <PhotoListItem key={photo.id} photoData={photo} />
+      <PhotoListItem 
+      key={photo.id} 
+      photoData={photo}
+      toggleFavorite={toggleFavorite}
+      favoritePhotos={favoritePhotos} 
+      toggleModal={toggleModal} />
     ))}
   </ul>
   );

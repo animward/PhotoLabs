@@ -14,11 +14,15 @@ export const sampleDataForPhotoListItem = {
 
 import React from 'react';
 
-const PhotoListItem = ({ photoData }) => {
+const PhotoListItem = ({ photoData, toggleModal }) => {
   const { urls, location, user } = photoData;
 
+  const handleClick = () => { 
+    toggleModal();
+  } 
+
   return (
-    <div className="photo-list__item">
+    <div className="photo-list__item" onClick={handleClick}>
       <img className="photo-list__image" src={urls.full} alt="User uploaded" />
       <div className="photo-list__user-details">
         <img
