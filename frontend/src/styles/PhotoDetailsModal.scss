@@ -9,6 +9,8 @@
   width: 55%;
   overflow-y: scroll;
   border-radius: 12px;
+  opacity: 1;
+  transition: ease-in-out 0.3s;
 }
 
 .photo-details-modal__close-button {

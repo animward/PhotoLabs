@@ -12,7 +12,7 @@ const PhotoDetailsModal = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className={`photo-details-modal${isOpen ? '-closed' : ''}`}>
+    <div className={`photo-details-modal${isOpen ? '' : '-closed'}`}>
       <button
         className="photo-details-modal__close-button"
         onClick={handleClose}
