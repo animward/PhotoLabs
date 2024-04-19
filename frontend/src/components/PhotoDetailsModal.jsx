@@ -1,10 +1,16 @@
 import React, { useEffect } from 'react';
 import '../styles/PhotoDetailsModal.scss';
+import PhotoList from './PhotoList';
+import photos from '../mocks/photos';
+import PhotoListItem from './PhotoListItem';
+import userEvent from '@testing-library/user-event';
+import '../styles/PhotoList.scss';
 
-const PhotoDetailsModal = ({ isOpen, onClose, photoData }) => {
+const PhotoDetailsModal = ({ isOpen, onClose, photoData, similarPhotos, photos }) => {
+
 
 	useEffect(() => {
-    console.log('isOpen:', isOpen); // Log the value of isOpen when it changes
+    console.log('isOpen:', isOpen);
   }, [isOpen]);
 
 	useEffect(() => {
@@ -15,6 +21,10 @@ const PhotoDetailsModal = ({ isOpen, onClose, photoData }) => {
     onClose();
   };
 
+	const imageUrl = photoData;
+	const imageSource = `${process.env.PUBLIC_URL}${imageUrl}`;
+	console.log('imageSource:', imageSource);
+	
   return (
     <div className={`photo-details-modal${isOpen ? '' : '-closed'}`}>
       <button
@@ -23,7 +33,13 @@ const PhotoDetailsModal = ({ isOpen, onClose, photoData }) => {
       >
         Close
       </button>
+			<div className="selected-photo">
+        <img src={imageSource} />
+      </div>
+      <div className="similar-photos">
+       <PhotoList photos={similarPhotos} />
     </div>
+		</div>
   );
 };
 

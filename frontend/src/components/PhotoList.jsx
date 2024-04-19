@@ -58,7 +58,7 @@ const sampleDataForPhotoList = [
   },
 ];
 
-const PhotoList = ({ photos, toggleFavorite, favoritePhotos, toggleModal }) => {
+const PhotoList = ({ toggleFavorite, favoritePhotos, toggleModal }) => {
   return (
     <ul className="photo-list">
     {photos.map((photo) => (

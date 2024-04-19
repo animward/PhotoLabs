@@ -1,6 +1,7 @@
 import '../styles/PhotoListItem.scss';
 import PhotoFavButton from './PhotoFavButton';
 
+
 export const sampleDataForPhotoListItem = {
   id: '1',
   location: {
@@ -15,7 +16,8 @@ export const sampleDataForPhotoListItem = {
 import React from 'react';
 
 const PhotoListItem = ({ photoData, toggleModal }) => {
-  const { urls, location, user } = photoData;
+  const { imageSource, location, user, urls } = photoData;
+
 
   const handleClick = () => { 
     toggleModal();
