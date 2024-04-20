@@ -60,7 +60,7 @@ const sampleDataForPhotoList = [
 
 const PhotoList = ({ toggleFavorite, favoritePhotos, toggleModal }) => {
   return (
-    <ul className="photo-list">
+    <div className="photo-list">
     {photos.map((photo) => (
       <PhotoListItem 
       key={photo.id} 
@@ -69,7 +69,7 @@ const PhotoList = ({ toggleFavorite, favoritePhotos, toggleModal }) => {
       favoritePhotos={favoritePhotos} 
       toggleModal={toggleModal} />
     ))}
-  </ul>
+  </div>
   );
 };
 
