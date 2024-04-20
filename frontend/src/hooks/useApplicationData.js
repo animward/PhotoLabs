@@ -1,17 +1,23 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer } from 'react';
 
 const ACTIONS = {
-  UPDATE_FAV_PHOTO_IDS: 'UPDATE_FAV_PHOTO_IDS',
+  UPDATE_FAV_PHOTO: 'UPDATE_FAV_PHOTO',
   SET_PHOTO_SELECTED: 'SET_PHOTO_SELECTED',
   CLOSE_PHOTO_DETAILS_MODAL: 'CLOSE_PHOTO_DETAILS_MODAL'
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case ACTIONS.UPDATE_FAV_PHOTO_IDS:
-      return { ...state, favoritePhotos: action.payload.photoIds };
+    case ACTIONS.UPDATE_FAV_PHOTO:
+      const { photoId } = action.payload;
+      const isFav = state.favoritePhotos.includes(photoId);
+      const updatedFavPhotos = isFav
+        ? state.favoritePhotos.filter((id) => id !== photoId)
+        : [...state.favoritePhotos, photoId];
+      return { ...state, favoritePhotos: updatedFavPhotos };
     case ACTIONS.SET_PHOTO_SELECTED:
-      return { ...state, selectedPhoto: action.payload.photoId };
+      const { photoDetails } = action.payload;
+      return { ...state, selectedPhoto: photoDetails };
     case ACTIONS.CLOSE_PHOTO_DETAILS_MODAL:
       return { ...state, displayModal: false };
     default:
@@ -28,24 +34,21 @@ const useApplicationData = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const updateToFavPhotoIds = (photoIds) => {
-    dispatch({ type: ACTIONS.UPDATE_FAV_PHOTO_IDS, payload: { photoIds } });
+  const updateToFavPhoto = (photoId) => {
+    dispatch({ type: ACTIONS.UPDATE_FAV_PHOTO, payload: { photoId } });
   };
 
-  const setPhotoSelected = (photoId) => {
-    dispatch({ type: ACTIONS.SET_PHOTO_SELECTED, payload: { photoId } });
+  const setPhotoSelected = (photoDetails) => {
+    dispatch({ type: ACTIONS.SET_PHOTO_SELECTED, payload: { photoDetails } });
   };
 
   const onClosePhotoDetailsModal = () => {
     dispatch({ type: ACTIONS.CLOSE_PHOTO_DETAILS_MODAL });
   };
 
-  useEffect(() => {
-  }, []);
-
   return {
     state,
-    updateToFavPhotoIds,
+    updateToFavPhoto,
     setPhotoSelected,
     onClosePhotoDetailsModal
   };
