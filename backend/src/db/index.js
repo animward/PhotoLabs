@@ -1,4 +1,6 @@
+// src/db/index.js
 const pg = require("pg");
+const ENV = require("../environment");
 
 const client = new pg.Client({
   host: process.env.PGHOST,
