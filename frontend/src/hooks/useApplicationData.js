@@ -1,4 +1,5 @@
-import { useReducer } from 'react';
+import PhotoDetailsModal from 'components/PhotoDetailsModal';
+import { useReducer, useEffect } from 'react';
 
 const ACTIONS = {
   UPDATE_FAV_PHOTO: 'UPDATE_FAV_PHOTO',
@@ -29,10 +30,18 @@ const useApplicationData = () => {
   const initialState = {
     favoritePhotos: [],
     selectedPhoto: null,
-    displayModal: false
+    displayModal: false,
+    photoData: [],
+    topicData: []
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    fetch("/api/photos")
+      .then((response) => response.json())
+      .then((data) => dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data }))
+  }, []);
 
   const updateToFavPhoto = (photoId) => {
     dispatch({ type: ACTIONS.UPDATE_FAV_PHOTO, payload: { photoId } });
