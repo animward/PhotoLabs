@@ -2,9 +2,7 @@ import React from 'react';
 
 import './App.scss';
 
-import HomeRoute from './components/HomeRoute'; // Add missing import statement
-import photos from './mocks/photos';
-import topics from './mocks/topics';
+import HomeRoute from './components/HomeRoute';
 import useApplicationData from './hooks/useApplicationData';
 
 const App = () => {
@@ -19,8 +17,8 @@ const App = () => {
   return (
     <div className="App">
       <HomeRoute
-        photos={photos}
-        topics={topics}
+        photos={state.photoData}
+        topics={state.topicData}
         state={state}
         onPhotoSelect={onPhotoSelect}
         updateToFavPhotoIds={updateToFavPhotoIds}
