@@ -7,26 +7,40 @@ const ACTIONS = {
   CLOSE_PHOTO_DETAILS_MODAL: 'CLOSE_PHOTO_DETAILS_MODAL',
   SET_PHOTO_DATA: 'SET_PHOTO_DATA',
   SET_TOPIC_DATA: 'SET_TOPIC_DATA',
+  SET_PHOTOS_FOR_TOPIC: 'SET_PHOTOS_FOR_TOPIC',
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
+
     case ACTIONS.UPDATE_FAV_PHOTO:
+
       const { photoId } = action.payload;
+
       const isFav = state.favoritePhotos.includes(photoId);
+
       const updatedFavPhotos = isFav
         ? state.favoritePhotos.filter((id) => id !== photoId)
         : [...state.favoritePhotos, photoId];
+
       return { ...state, favoritePhotos: updatedFavPhotos };
     case ACTIONS.SET_PHOTO_SELECTED:
+
       const { photoDetails } = action.payload;
       return { ...state, selectedPhoto: photoDetails };
+
     case ACTIONS.CLOSE_PHOTO_DETAILS_MODAL:
       return { ...state, displayModal: false };
+
       case ACTIONS.SET_PHOTO_DATA:
       return { ...state, photoData: action.payload };
+
     case ACTIONS.SET_TOPIC_DATA:
       return { ...state, topicData: action.payload };
+
+    case ACTIONS.SET_PHOTOS_FOR_TOPIC:
+      return { ...state, photosForTopic: action.payload };
+
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
@@ -38,7 +52,8 @@ const useApplicationData = () => {
     selectedPhoto: null,
     displayModal: false,
     photoData: [],
-    topicData: []
+    topicData: [],
+    photosForTopic: [],
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -54,6 +69,12 @@ const useApplicationData = () => {
       .then((response) => response.json())
       .then((data) => dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: data }))
   }, []);
+
+  const fetchPhotosForTopic = (topicId) => {
+    fetch(`/api/topics/photos/${topicId}`)
+      .then((response) => response.json())
+      .then((data) => dispatch({ type: ACTIONS.SET_PHOTOS_FOR_TOPIC, payload: data }));
+  };
 
   const updateToFavPhoto = (photoId) => {
     dispatch({ type: ACTIONS.UPDATE_FAV_PHOTO, payload: { photoId } });
@@ -79,6 +100,7 @@ const useApplicationData = () => {
     setPhotoSelected,
     onClosePhotoDetailsModal,
     onLoadTopic,
+    fetchPhotosForTopic,
   };
 };
 
