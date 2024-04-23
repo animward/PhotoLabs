@@ -26,6 +26,7 @@ const TopNavigation = ({
         toggleLikedPhotos={toggleLikedPhotos}
         likedPhotos={likedPhotos}
       />
+      <button className="top-nav-bar_darkmode" onClick={() => {document.body.classList.toggle('dark-mode')}}>Dark Mode</button>
     </div>
   );
 };
