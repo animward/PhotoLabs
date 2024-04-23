@@ -1,34 +1,21 @@
-import React from "react";
+import React from 'react';
 
-import "../styles/TopicList.scss";
-import TopicListItem from "./TopicListItem";
+import '../styles/TopicList.scss';
+import TopicListItem from './TopicListItem';
 
-const sampleDataForTopicList = [
-  {
-    id: "1",
-    slug: "topic-1",
-    title: "Nature",
-  },
-  {
-    id: "2",
-    slug: "topic-2",
-    title: "Travel",
-  },
-  {
-    id: "3",
-    slug: "topic-3",
-    title: "People",
-  },
-];
+const TopicList = ({ topics, handleTopicSelect }) => {
+  if (!topics || !Array.isArray(topics)) {
+    return null;
+  }
 
-const TopicList = ({ topics }) => {
-  return (
-    <div className="top-nav-bar__topic-list">
-      {sampleDataForTopicList.map((topic) => (
-        <TopicListItem key={topic.id} title={topic.title} />
-      ))}
-    </div>
-  );
+  const topicListContainer = topics.map((topic) => (
+    <TopicListItem
+      key={topic.id}
+      topic={topic}
+      handleTopicSelect={handleTopicSelect}
+    />
+  ));
+  return <div className="top-nav-bar__topic-list">{topicListContainer}</div>;
 };
 
 export default TopicList;

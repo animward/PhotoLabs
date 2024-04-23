@@ -1,43 +1,45 @@
+import React from 'react';
 import '../styles/PhotoListItem.scss';
 import PhotoFavButton from './PhotoFavButton';
+import FavBadge from './FavBadge';
 
-
-export const sampleDataForPhotoListItem = {
-  id: '1',
-  location: {
-    city: 'Montreal',
-    country: 'Canada',
-  },
-  imageSource: `${process.env.PUBLIC_URL}/Image-1-Regular.jpeg`,
-  username: 'Joe Example',
-  profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
-};
-
-import React from 'react';
-
-const PhotoListItem = ({ photoData, toggleModal, toggleFavorite }) => {
-  const { imageSource, location, user, urls, id: photoId } = photoData;
-
-
-  const handleClick = () => { 
-    toggleModal();
-  } 
-
+const PhotoListItem = ({
+  photo,
+  toggleFavourite,
+  likedPhotos,
+  id,
+  toggleModal,
+  isModal,
+}) => {
   return (
-    <div className="photo-list__item" onClick={handleClick}>
-      <img className="photo-list__image" src={urls.full} alt="User uploaded" />
+    <div className={`photo-list__item ${isModal ? 'modal' : ''}`}>
+      <PhotoFavButton
+        toggleFavourite={toggleFavourite}
+        likedPhotos={likedPhotos}
+        id={id}
+      />
+
+      <div className="photo-list__photo-details">
+        <p className="photo-list__photo-title">{photo.title}</p>
+        <p className="photo-list__photo-description">{photo.description}</p>
+      </div>
+      <img
+        className="photo-list__image"
+        src={photo.urls.regular}
+        onClick={() => toggleModal(photo)}
+      ></img>
       <div className="photo-list__user-details">
         <img
           className="photo-list__user-profile"
-          src={user.profile}
-          alt="User profile"
-        />
+          src={photo.user.profile}
+        ></img>
         <div className="photo-list__user-info">
-          <div>{user.username}</div>
-          <div className="photo-list__user-location">{`${location.city}, ${location.country}`}</div>
+          <p className="">{photo.user.name}</p>
+          <p className="photo-list__user-location">
+            {photo.location.city}, {photo.location.country}
+          </p>
         </div>
       </div>
-      <PhotoFavButton toggleFavorite={toggleFavorite} photoId={photoId}/>
     </div>
   );
 };

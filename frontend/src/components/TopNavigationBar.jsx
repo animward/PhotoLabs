@@ -1,18 +1,33 @@
 import React from 'react';
 
-import '../styles/TopNavigationBar.scss'
+import '../styles/TopNavigationBar.scss';
 import TopicList from './TopicList';
 import FavBadge from './FavBadge';
+import LikedPhotosModal from './LikedPhotosModal';
 
-const TopNavigation = ({ topics }) => {
+const TopNavigation = ({
+  topics,
+  likedPhotos,
+  handleTopicSelect,
+  toggleLikedPhotos,
+}) => {
+  const hasLikedPhotos = likedPhotos && likedPhotos.length > 0;
   return (
     <div className="top-nav-bar">
-      <span className="top-nav-bar__logo">PhotoLabs</span>
-     <TopicList topics={ topics }/>
-      <FavBadge isFavPhotoExist={true} />
+      <span
+        className="top-nav-bar__logo"
+        onClick={() => handleTopicSelect(null)}
+      >
+        PhotoLabs
+      </span>
+      <TopicList topics={topics} handleTopicSelect={handleTopicSelect} />
+      <FavBadge
+        likedPhotosLength={likedPhotos.length > 0}
+        toggleLikedPhotos={toggleLikedPhotos}
+        likedPhotos={likedPhotos}
+      />
     </div>
-    
-  )
-}
+  );
+};
 
 export default TopNavigation;

@@ -1,107 +1,141 @@
-import PhotoDetailsModal from 'components/PhotoDetailsModal';
 import { useReducer, useEffect } from 'react';
 
-const ACTIONS = {
-  UPDATE_FAV_PHOTO: 'UPDATE_FAV_PHOTO',
-  SET_PHOTO_SELECTED: 'SET_PHOTO_SELECTED',
-  CLOSE_PHOTO_DETAILS_MODAL: 'CLOSE_PHOTO_DETAILS_MODAL',
-  SET_PHOTO_DATA: 'SET_PHOTO_DATA',
-  SET_TOPIC_DATA: 'SET_TOPIC_DATA',
-  SET_PHOTOS_FOR_TOPIC: 'SET_PHOTOS_FOR_TOPIC',
+export const ACTIONS = {
+  APP_TOGGLE_MODAL: 'APP_TOGGLE_MODAL',
+  PHOTO_TOGGLE_FAVOURITE: 'PHOTO_TOGGLE_FAVOURITE',
+  APP_SET_PHOTO_DATA: 'APP_SET_PHOTO_DATA',
+  APP_SET_TOPIC_DATA: 'APP_SET_TOPIC_DATA',
+  APP_SET_TOPIC: 'APP_SET_TOPIC',
+  APP_TOGGLE_LIKED_PHOTOS_MODAL: 'APP_TOGGLE_LIKED_PHOTOS_MODAL',
+  APP_SET_ALL_PHOTO_DATA: 'APP_SET_ALL_PHOTO_DATA',
+};
+const initialState = {
+  showModal: false,
+  modalPhoto: null,
+  likedPhotos: [],
+  photoData: [],
+  topicData: [],
+  topic: null,
 };
 
-const reducer = (state, action) => {
+function reducer(state, action) {
   switch (action.type) {
-
-    case ACTIONS.UPDATE_FAV_PHOTO:
-
-      const { photoId } = action.payload;
-
-      const isFav = state.favoritePhotos.includes(photoId);
-
-      const updatedFavPhotos = isFav
-        ? state.favoritePhotos.filter((id) => id !== photoId)
-        : [...state.favoritePhotos, photoId];
-
-      return { ...state, favoritePhotos: updatedFavPhotos };
-    case ACTIONS.SET_PHOTO_SELECTED:
-
-      const { photoDetails } = action.payload;
-      return { ...state, selectedPhoto: photoDetails };
-
-    case ACTIONS.CLOSE_PHOTO_DETAILS_MODAL:
-      return { ...state, displayModal: false };
-
-      case ACTIONS.SET_PHOTO_DATA:
-      return { ...state, photoData: action.payload };
-
-    case ACTIONS.SET_TOPIC_DATA:
-      return { ...state, topicData: action.payload };
-
-    case ACTIONS.SET_PHOTOS_FOR_TOPIC:
-      return { ...state, photosForTopic: action.payload };
-
+    case ACTIONS.APP_TOGGLE_MODAL:
+      return {
+        ...state,
+        showModal: action.payload !== null,
+        modalPhoto: action.payload,
+      };
+    case ACTIONS.PHOTO_TOGGLE_FAVOURITE:
+      const id = action.payload;
+      const likedPhoto = state.likedPhotos.includes(id);
+      return {
+        ...state,
+        likedPhotos: likedPhoto
+          ? state.likedPhotos.filter((e) => e !== id)
+          : [...state.likedPhotos, id],
+      };
+    case ACTIONS.APP_SET_PHOTO_DATA:
+      return {
+        ...state,
+        photoData: action.payload,
+      };
+    case ACTIONS.APP_SET_TOPIC_DATA:
+      return {
+        ...state,
+        topicData: action.payload,
+      };
+    case ACTIONS.APP_SET_TOPIC:
+      return {
+        ...state,
+        topic: action.payload,
+      };
+    case ACTIONS.APP_TOGGLE_LIKED_PHOTOS_MODAL:
+      return {
+        ...state,
+        showLikedPhotos: action.payload > 0 ? true : false,
+      };
+    case ACTIONS.APP_SET_ALL_PHOTO_DATA:
+      return {
+        ...state,
+        allPhotos: action.payload,
+      };
     default:
-      throw new Error(`Unhandled action type: ${action.type}`);
+      throw new Error(
+        `Tried to reduce with unsupported action type: ${action.type}`
+      );
   }
-};
+}
 
-const useApplicationData = () => {
-  const initialState = {
-    favoritePhotos: [],
-    selectedPhoto: null,
-    displayModal: false,
-    photoData: [],
-    topicData: [],
-    photosForTopic: [],
-  };
-
+function useApplicationData() {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const toggleModal = (photo) => {
+    dispatch({ type: ACTIONS.APP_TOGGLE_MODAL, payload: photo });
+  };
+  const toggleFavourite = (id) => {
+    dispatch({ type: ACTIONS.PHOTO_TOGGLE_FAVOURITE, payload: id });
+  };
+
+  const handleTopicSelect = (topicId) => {
+    dispatch({ type: ACTIONS.APP_SET_TOPIC, payload: topicId });
+  };
 
   useEffect(() => {
-    fetch("/api/photos")
-      .then((response) => response.json())
-      .then((data) => dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data }))
+    fetch('http://localhost:8001/api/photos')
+      .then((res) => res.json())
+      .then((data) =>
+        dispatch({ type: ACTIONS.APP_SET_PHOTO_DATA, payload: data })
+      )
+      .catch((err) => console.log('Error when fetching data: ', err));
   }, []);
 
   useEffect(() => {
-    fetch("/api/topics")
-      .then((response) => response.json())
-      .then((data) => dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: data }))
+    fetch('http://localhost:8001/api/topics')
+      .then((res) => res.json())
+      .then((data) =>
+        dispatch({ type: ACTIONS.APP_SET_TOPIC_DATA, payload: data })
+      )
+      .catch((err) => console.log('Error when fetching data: ', err));
   }, []);
 
-  const fetchPhotosForTopic = (topicId) => {
-    fetch(`/api/topics/photos/${topicId}`)
-      .then((response) => response.json())
-      .then((data) => dispatch({ type: ACTIONS.SET_PHOTOS_FOR_TOPIC, payload: data }));
-  };
+  useEffect(() => {
+    if (state.topic !== null) {
+      fetch(`http://localhost:8001/api/topics/photos/${state.topic}`)
+        .then((res) => res.json())
+        .then((data) =>
+          dispatch({ type: ACTIONS.APP_SET_PHOTO_DATA, payload: data })
+        )
+        .catch((err) => console.log('Error when fetching data: ', err));
+    } else {
+      fetch('http://localhost:8001/api/photos')
+        .then((res) => res.json())
+        .then((data) =>
+          dispatch({ type: ACTIONS.APP_SET_PHOTO_DATA, payload: data })
+        )
+        .catch((err) => console.log('Error when fetching data: ', err));
+    }
+  }, [state.topic]);
 
-  const updateToFavPhoto = (photoId) => {
-    dispatch({ type: ACTIONS.UPDATE_FAV_PHOTO, payload: { photoId } });
-  };
-
-  const setPhotoSelected = (photoDetails) => {
-    dispatch({ type: ACTIONS.SET_PHOTO_SELECTED, payload: { photoDetails } });
-  };
-
-  const onClosePhotoDetailsModal = () => {
-    dispatch({ type: ACTIONS.CLOSE_PHOTO_DETAILS_MODAL });
-  };
-
-  const onLoadTopic = () => {
-    fetch("/api/topics")
-      .then((response) => response.json())
-      .then((data) => dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: data }))
-  };
+  const {
+    showModal,
+    modalPhoto,
+    likedPhotos,
+    photoData,
+    topicData,
+    showLikedPhotos,
+  } = state;
 
   return {
-    state,
-    updateToFavPhoto,
-    setPhotoSelected,
-    onClosePhotoDetailsModal,
-    onLoadTopic,
-    fetchPhotosForTopic,
+    showModal,
+    modalPhoto,
+    likedPhotos,
+    toggleModal,
+    toggleFavourite,
+    handleTopicSelect,
+    photoData,
+    topicData,
+    showLikedPhotos,
   };
-};
+}
 
 export default useApplicationData;

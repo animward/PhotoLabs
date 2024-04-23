@@ -9,7 +9,7 @@ import PhotoDetailsModal from './PhotoDetailsModal';
 import { useState } from 'react';
 import PhotoListItem from './PhotoListItem';
 
-const HomeRoute = ({ photos }) => {
+const HomeRoute = ({ photos, topics, handleTopicSelect }) => {
   const [favoritePhotos, setFavoritePhotos] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -27,7 +27,11 @@ const HomeRoute = ({ photos }) => {
 
   return (
     <div className="home-route">
-      <TopNavigationBar favoriteCount={favoritePhotos.length} />
+      <TopNavigationBar
+        topics={topics}
+        favoriteCount={favoritePhotos.length}
+        handleTopicSelect={handleTopicSelect}
+      />
       <PhotoList
         photos={photos}
         toggleFavorite={toggleFavorite}
@@ -35,12 +39,13 @@ const HomeRoute = ({ photos }) => {
         toggleModal={toggleModal}
       />
       <TopicList topics={topics} />
-      <PhotoDetailsModal 
-      isOpen={isModalOpen}
-       onClose={toggleModal}
-       selectedPhoto={photos['']}
-       similarPhotos={[]}
-       toggleFavorite={toggleFavorite} />
+      <PhotoDetailsModal
+        isOpen={isModalOpen}
+        onClose={toggleModal}
+        selectedPhoto={photos['']}
+        similarPhotos={[]}
+        toggleFavorite={toggleFavorite}
+      />
     </div>
   );
 };

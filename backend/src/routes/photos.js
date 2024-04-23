@@ -1,13 +1,14 @@
-const router = require("express").Router();
+const router = require('express').Router();
 
-module.exports = db => {
-  router.get("/photos", (request, response) => {
+module.exports = (db) => {
+  router.get('/photos', (request, response) => {
     const protocol = request.protocol;
     const host = request.hostname;
     const port = process.env.PORT || 8001;
     const serverUrl = `${protocol}://${host}:${port}`;
 
-    db.query(`
+    db.query(
+      `
       SELECT 
       json_agg(
           json_build_object(
@@ -55,9 +56,19 @@ module.exports = db => {
         ) as photo_data
       FROM photo
       JOIN user_account ON user_account.id = photo.user_id;
-    `).then(({ rows }) => {
-      response.json(rows[0].photo_data);
-    });
+    `
+    )
+      .then(({ rows }) => {
+        response.setHeader('Content-Type', 'application/json');
+
+        const jsonString = JSON.stringify(rows[0].photo_data);
+
+        response.send(jsonString);
+      })
+      .catch((error) => {
+        console.error('Error fetching photos: ', error);
+        response.status(500).json({ error: 'An error occurred' });
+      });
   });
 
   return router;
