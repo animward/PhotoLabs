@@ -12,6 +12,7 @@ import PhotoListItem from './PhotoListItem';
 const HomeRoute = ({ photos, topics, handleTopicSelect }) => {
   const [favoritePhotos, setFavoritePhotos] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
 
   const toggleFavorite = (photoId) => {
     if (favoritePhotos.includes(photoId)) {
@@ -21,8 +22,9 @@ const HomeRoute = ({ photos, topics, handleTopicSelect }) => {
     }
   };
 
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+  const toggleModal = (photo) => {
+    setSelectedPhoto(photo);
+    setIsModalOpen(isModalOpen);
   };
 
   return (
@@ -42,7 +44,7 @@ const HomeRoute = ({ photos, topics, handleTopicSelect }) => {
       <PhotoDetailsModal
         isOpen={isModalOpen}
         onClose={toggleModal}
-        selectedPhoto={photos['']}
+        selectedPhoto={selectedPhoto}
         similarPhotos={[]}
         toggleFavorite={toggleFavorite}
       />
