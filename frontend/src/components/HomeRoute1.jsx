@@ -1,3 +1,4 @@
+// yes its duplicate code, but without this, the app will not work
 import React from 'react';
 import TopNavigationBar from 'components/TopNavigationBar';
 import PhotoList from 'components/PhotoList';

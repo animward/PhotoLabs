@@ -1,7 +1,7 @@
 import React from 'react';
-import HomeRoute from './routes/HomeRoute';
+import HomeRoute from './components/HomeRoute1';
 import PhotoDetailsModal from './components/PhotoDetailsModal';
-import LikedPhotosModal from './components/LikedPhotosModal'; // Import the LikedPhotosModal component
+import LikedPhotosModal from './components/LikedPhotosModal';
 import useApplicationData from './hooks/useApplicationData';
 import './App.scss';
 
